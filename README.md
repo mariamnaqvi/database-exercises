@@ -1,2 +1,2 @@
 # database-exercises
-TESTING BRANCH  location
+This repo will contain my sql exercises
