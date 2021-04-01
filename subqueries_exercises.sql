@@ -2,9 +2,11 @@
 SELECT first_name, last_name, hire_date
 FROM employees e
 JOIN dept_emp de ON de.emp_no = e.emp_no 
-WHERE hire_date IN (SELECT hire_date
-FROM employees e
-WHERE emp_no = 101010) AND to_date LIKE '9999%';
+WHERE hire_date IN 
+    (SELECT hire_date
+    FROM employees e
+    WHERE emp_no = 101010) 
+AND to_date LIKE '9999%';
 -- returns 55 rows
 
 
@@ -12,9 +14,9 @@ WHERE emp_no = 101010) AND to_date LIKE '9999%';
 SELECT title 
 FROM titles
 WHERE emp_no IN (
-SELECT emp_no 
-FROM employees
-WHERE first_name = 'Aamod'
+    SELECT emp_no 
+    FROM employees
+    WHERE first_name = 'Aamod'
 )
 AND to_date LIKE '9999%';
 --  returns 168 rows
@@ -24,9 +26,9 @@ AND to_date LIKE '9999%';
 SELECT title
 FROM titles
 WHERE emp_no IN (
-SELECT emp_no 
-FROM employees
-WHERE first_name = 'Aamod'
+    SELECT emp_no 
+    FROM employees
+    WHERE first_name = 'Aamod'
 )
 AND to_date LIKE '9999%'
 GROUP BY title;
@@ -35,9 +37,9 @@ GROUP BY title;
 SELECT count(emp_no)
 FROM employees
 WHERE emp_no IN (
-SELECT emp_no
-FROM dept_emp
-WHERE to_date NOT LIKE '9999%'
+    SELECT emp_no
+    FROM dept_emp
+    WHERE to_date NOT LIKE '9999%'
 );
 --  85108 employees
 
@@ -45,9 +47,9 @@ WHERE to_date NOT LIKE '9999%'
 SELECT first_name, last_name
 FROM employees
 WHERE emp_no IN (
-SELECT emp_no 
-FROM dept_manager
-WHERE to_date > now()
+    SELECT emp_no 
+    FROM dept_manager
+    WHERE to_date > now()
 ) AND gender = 'F';
 -- Isamu	Legleitner
 -- Karsten	Sigstam
@@ -60,8 +62,9 @@ FROM employees
 WHERE emp_no IN (
 SELECT emp_no
 FROM salaries
-WHERE salary >= (SELECT avg(salary)
-FROM salaries)
+WHERE salary >= 
+    (SELECT avg(salary)
+    FROM salaries)
 AND to_date > now()
 );
 
@@ -71,21 +74,38 @@ AND to_date > now()
 /* 6. How many current salaries are within 1 standard deviation of the current highest salary? 
 (Hint: you can use a built in function to calculate the standard deviation.) What percentage of all salaries is this? */
 -- to find max salary
-SELECT max(salary)
-FROM salaries
-WHERE to_date > now();
--- 158220 is the current highest
+SELECT count(emp_no) AS number_of_salaries
+FROM salaries 
+WHERE salary >= 
+    (SELECT max(salary) - stddev(salary)
+    FROM salaries)
+AND to_date > now();
+-- returns 78 salaries
+
+--  to find the percentage of all salaries
+SELECT (
+    SELECT count(emp_no) AS number_of_salaries
+    FROM salaries 
+    WHERE salary >= (SELECT max(salary) - stddev(salary)
+    FROM salaries)
+AND to_date > now())
+    / (SELECT count(*)
+    FROM salaries 
+    WHERE to_date > now()
+    )*100 AS percentage;
+-- returns 0.0325%
 
 --  bonus questions
 -- 1. Find all the department names that currently have female managers.
-SELECT distinct dept_name
+SELECT dept_name 
 FROM departments d
-JOIN dept_emp de ON de.dept_no =d.dept_no
-WHERE emp_no IN (SELECT emp_no 
+JOIN dept_manager dm ON dm.dept_no = d.dept_no
+WHERE emp_no IN 
+(SELECT emp_no 
 FROM employees
 WHERE gender = 'F')
 AND to_date > now();
---  returns 9 rows
+--  returns 4 department names: Finance, Human Resources, Development. Research
 
 -- 2. Find the first and last name of the employee with the highest salary.
 SELECT first_name, last_name
