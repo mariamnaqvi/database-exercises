@@ -13,48 +13,19 @@ AND to_date > now();
 -- returns 55 records
 
 --  2. Find all the titles ever held by all current employees with the first name Aamod. 
-SELECT title 
+SELECT title, count(title) AS number_of_titles_held
 FROM titles
-WHERE emp_no IN (
-    SELECT emp_no 
-    FROM employees
-    WHERE first_name = 'Aamod'
+WHERE emp_no IN 
+(
+SELECT emp_no
+FROM salaries
+JOIN employees e USING(emp_no)
+WHERE to_date > now()
+AND first_name = 'Aamod'
 )
-AND to_date LIKE '9999%';
---  returns 168 rows
+GROUP BY title;
+-- returns 6 records and 251 titles
 
--- or do this to group by title
-SELECT title, count(title) AS num_of_employees
-FROM titles
-WHERE emp_no IN (
-    SELECT emp_no 
-    FROM employees
-    WHERE first_name = 'Aamod'
-)
-AND to_date LIKE '9999%'
-GROUP BY title; 
--- returns 168 employees with 6 titles
-
-
--- ray solution
-SELECT
-      t.title AS 'Titles Held by Aamods',
-      COUNT(t.title) AS 'Total Aamods Who Held Title'
-FROM titles AS t
-WHERE
-      t.emp_no IN
-      (
-            SELECT
-                  e.emp_no
-            FROM employees AS e
-            JOIN salaries AS s
-                  ON e.emp_no = s.emp_no
-                        AND s.to_date > CURDATE()
-            WHERE
-                first_name LIKE 'Aamod'
-      )
-GROUP BY
-      t.title -- 251 rows
 
 -- 3. How many people in the employees table are no longer working for the company? Give the answer in a comment in your code. 
 SELECT count(*) AS number_of_employees
