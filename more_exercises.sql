@@ -1,4 +1,4 @@
-/* How much do the current managers of each department get paid, relative to the average salary for the department? 
+/* 1. How much do the current managers of each department get paid, relative to the average salary for the department? 
 Is there any department where the department manager gets paid less than the average salary? */
 
 -- select the db
@@ -52,3 +52,42 @@ ON t1.dept_no = t2.dept_no;
 "d008"   |79393           |67913.37
 "d009"   |58745           |67285.23
 */
+
+
+-- 2. World Database
+-- Use the world database for the questions below.
+USE world;
+
+-- exploring the tables in world db
+SELECT ID, NAME
+FROM city
+WHERE NAME = 'Santa Monica';
+
+SELECT CODE, NAME
+FROM country
+WHERE NAME LIKE 'United%';
+
+-- What languages are spoken in Santa Monica?
+SELECT LANGUAGE AS languages_spoken_in_SantaMonica
+FROM countrylanguage co
+JOIN city c ON c.countrycode = co.countrycode
+AND NAME = 'Santa Monica'
+WHERE co.countryCODE = 'USA';
+
+/*
+"languages_spoken_in_SantaMonica"|"percentage"
+"Portuguese"                     |0.2
+"Vietnamese"                     |0.2
+"Japanese"                       |0.2
+"Korean"                         |0.3
+"Polish"                         |0.3
+"Tagalog"                        |0.4
+"Italian"                        |0.6
+"Chinese"                        |0.6
+"French"                         |0.7
+"German"                         |0.7
+"Spanish"                        |7.5
+"English"                        |86.2
+*/
+
+
