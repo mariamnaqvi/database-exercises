@@ -254,3 +254,44 @@ FROM country
 GROUP BY Region
 ORDER BY life_expectancy;
 
+/*
++---------------------------+-----------------++---------------------------+-----------------++---------------------------+-----------------+
+
+BONUS */
+
+-- Find all the countries whose local name is different from the official name
+
+SELECT NAME, localname
+FROM country
+WHERE NAME != localname;
+
+-- How many countries have a life expectancy less than Djibouti?
+
+SELECT NAME, lifeexpectancy AS life_expectancy
+FROM country
+WHERE lifeexpectancy < (SELECT lifeexpectancy
+FROM country 
+WHERE NAME = 'Djibouti'
+)
+ORDER BY name;
+
+-- What state is the city Mazar-e-Sharif located in?
+
+SELECT NAME, district
+FROM city
+WHERE NAME = 'Mazar-e-Sharif'; 
+-- returns Balkh
+
+-- What region of the world is the city Sydney located in?
+
+SELECT c.NAME AS city, region
+FROM city c
+JOIN country co ON co.code = c.countrycode
+WHERE c.name = 'Sydney';
+-- returns Australia and New Zealand
+
+-- What country (use the human readable name) is city Emmen located in?
+
+
+
+-- What is the life expectancy in city Almirante Brown? 
