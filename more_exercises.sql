@@ -292,6 +292,54 @@ WHERE c.name = 'Sydney';
 
 -- What country (use the human readable name) is city Emmen located in?
 
+SELECT c.NAME AS City, co.name AS Country
+FROM country co
+JOIN city c ON c.countrycode = co.code
+WHERE c.NAME = 'Emmen';
+-- returns country Netherlands
 
 
 -- What is the life expectancy in city Almirante Brown? 
+
+SELECT lifeexpectancy
+FROM country co
+JOIN city c ON c.countrycode = co.code
+WHERE c.NAME = 'Almirante Brown';
+-- returns life expectancy of 75.1
+
+/*
++---------------------------+-----------------++---------------------------+-----------------++---------------------------+-----------------+
+
+Sakila Database */
+
+USE sakila;
+
+-- 1. Display the first and last names in all lowercase of all the actors.
+
+SELECT lower(first_name) AS 'First Name', lower(last_name) AS 'Last Name'
+FROM actor;
+
+-- 2. You need to find the ID number, first name, and last name of an actor, of whom you know only the first name, "Joe." 
+-- What is one query you could use to obtain this information?
+
+SELECT actor_id AS ID, first_name AS 'First Name', last_name AS 'Last Name'
+FROM actor
+WHERE first_name = 'Joe';
+/* returns 
+ID	First Name	Last Name
+9	JOE	        SWANK
+*/
+
+-- 3. Find all actors whose last name contain the letters "gen":
+
+SELECT first_name AS 'First Name', last_name AS 'Last Name'
+FROM actor
+WHERE last_name LIKE '%gen%';
+/* returns 
+
+First Name	Last Name
+VIVIEN	BERGEN
+JODIE	DEGENERES
+GINA	DEGENERES
+NICK	DEGENERES
+*/
