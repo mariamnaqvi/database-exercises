@@ -343,3 +343,68 @@ JODIE	DEGENERES
 GINA	DEGENERES
 NICK	DEGENERES
 */
+
+-- 4. Find all actors whose last names contain the letters "li". 
+-- This time, order the rows by last name and first name, in that order.
+
+SELECT last_name, first_name
+FROM actor
+WHERE last_name like '%li%'
+ORDER BY last_name, first_name;
+
+-- 5. Using IN, display the country_id and country columns for the following countries: 
+-- Afghanistan, Bangladesh, and China:
+
+SELECT country_id, country
+FROM country
+WHERE country IN ('Afghanistan', 'Bangladesh', 'China');
+
+-- 6. List the last names of all the actors, as well as how many actors have that last name.
+
+SELECT last_name, count(last_name) AS count
+FROM actor
+GROUP BY last_name;
+
+-- 7. List last names of actors and the number of actors who have that last name, 
+-- but only for names that are shared by at least two actors
+
+SELECT last_name, count(last_name) AS count
+FROM actor
+GROUP BY last_name
+HAVING count >= 2
+ORDER BY count;
+
+-- 8. You cannot locate the schema of the address table. 
+-- Which query would you use to re-create it?
+
+DESC address;
+
+-- 9. Use JOIN to display the first and last names, as well as the address, of each staff member.
+
+SELECT first_name, last_name, address
+FROM staff s
+JOIN address a ON a.address_id = s.address_id;
+
+-- 10. Use JOIN to display the total amount rung up by each staff member in August of 2005.
+
+SELECT sum(amount) AS 'total amount', staff_id
+FROM payment p 
+JOIN staff s USING (staff_id)
+WHERE payment_date LIKE '2005-08%'
+GROUP BY staff_id;
+
+-- 11. List each film and the number of actors who are listed for that film.
+
+SELECT title, count(actor_id) AS 'number of actors'
+FROM film 
+JOIN film_actor USING (film_id)
+GROUP BY title;
+
+-- 12. How many copies of the film Hunchback Impossible exist in the inventory system?
+
+SELECT count(*) AS number_of_copies
+FROM inventory
+JOIN film USING (film_id)
+WHERE title = 'Hunchback Impossible';
+
+
