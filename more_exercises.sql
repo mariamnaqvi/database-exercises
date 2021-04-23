@@ -53,6 +53,26 @@ ON t1.dept_no = t2.dept_no;
 "d009"   |58745           |67285.23
 */
 
+
+-- find the difference between the highest salaries found in the marketing and development departments
+
+SELECT m_sal.salary - d_sal.salary2 'Salary Difference'
+FROM 
+-- getting max salary from marketing
+(SELECT MAX(salary) AS salary
+FROM salaries 
+JOIN dept_emp USING (emp_no)
+JOIN departments USING (dept_no)
+WHERE dept_name IN ('marketing')
+GROUP BY dept_name) AS m_sal,
+-- getting max salary from development
+(SELECT MAX(salary) AS salary2 
+FROM salaries 
+JOIN dept_emp USING (emp_no)
+JOIN departments USING (dept_no)
+WHERE dept_name IN ('development')
+GROUP BY dept_name) AS d_sal;
+
 +-----------+------------++-----------+------------++-----------+------------++-----------+------------++-----------+------------+
 
 -- 2. World Database
