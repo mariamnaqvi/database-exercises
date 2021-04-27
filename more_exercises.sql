@@ -427,4 +427,26 @@ FROM inventory
 JOIN film USING (film_id)
 WHERE title = 'Hunchback Impossible';
 
+/* 13. The music of Queen and Kris Kristofferson have seen an unlikely resurgence. 
+As an unintended consequence, films starting with the letters K and Q have also soared in popularity.
+ Use subqueries to display the titles of movies starting with the letters K and Q whose language is English.
+ 
+ returns 15 rows*/
+
+SELECT title
+FROM film 
+WHERE title IN (SELECT title 
+FROM actor 
+WHERE title LIKE 'k%' OR title LIKE 'q%')
+AND language_id = 1;
+
+-- Use subqueries to display all actors who appear in the film Alone Trip.
+
+SELECT first_name, last_name
+FROM actor
+JOIN film_actor fa USING (actor_id)
+WHERE fa.film_id IN (SELECT 
+film_id
+FROM film 
+WHERE title = 'Alone Trip');
 
