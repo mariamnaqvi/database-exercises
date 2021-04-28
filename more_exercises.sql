@@ -440,7 +440,7 @@ FROM actor
 WHERE title LIKE 'k%' OR title LIKE 'q%')
 AND language_id = 1;
 
--- Use subqueries to display all actors who appear in the film Alone Trip.
+-- 14. Use subqueries to display all actors who appear in the film Alone Trip.
 
 SELECT first_name, last_name
 FROM actor
@@ -449,4 +449,30 @@ WHERE fa.film_id IN (SELECT
 film_id
 FROM film 
 WHERE title = 'Alone Trip');
+
+-- 15. You want to run an email marketing campaign in Canada, for which you will need the names and email addresses of all Canadian customers.
+
+SELECT lower(concat(first_name, ' ', last_name)) AS customer_name, email
+FROM customer
+JOIN address USING (address_id)
+JOIN city USING (city_id)
+WHERE country_id IN (SELECT country_id 
+FROM country
+WHERE country = 'Canada'); 
+
+-- 16.  Identify all movies categorized as famiy films.
+
+SELECT title, rating
+FROM film 
+WHERE film_id IN (SELECT film_id 
+FROM film_category
+WHERE category_id IN (SELECT category_id 
+FROM category 
+WHERE NAME = 'family'));
+
+-- 17. Write a query to display how much business, in dollars, each store brought in.
+
+-- 18. Write a query to display for each store its store ID, city, and country.
+
+-- 19. List the top five genres in gross revenue in descending order. (Hint: you may need to use the following tables: category, film_category, inventory, payment, and rental.)
 
