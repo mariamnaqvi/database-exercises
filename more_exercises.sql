@@ -474,5 +474,11 @@ WHERE NAME = 'family'));
 
 -- 18. Write a query to display for each store its store ID, city, and country.
 
+SELECT store_id, city, country
+FROM store
+JOIN address USING (address_id)
+JOIN city USING (city_id)
+JOIN country USING (country_id);
+
 -- 19. List the top five genres in gross revenue in descending order. (Hint: you may need to use the following tables: category, film_category, inventory, payment, and rental.)
 
