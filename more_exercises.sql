@@ -490,3 +490,46 @@ JOIN payment p USING (rental_id)
 GROUP BY category_id
 ORDER BY revenue DESC
 LIMIT 5;
+
+-- 1. SELECT statements
+
+-- a. Select all columns from the actor table.
+SELECT * 
+FROM actor;
+
+-- b. Select only the last_name column from the actor table.
+SELECT last_name
+FROM actor;
+
+/* c. Select only the following columns from the film table:
+title, rental_duration, rental_rate, rating */
+SELECT title, rental_duration, rental_rate, rating
+FROM film;
+
+/* d. Select only the following columns from the film table:
+number of titles, rental_duration, rental_rate, rating */
+SELECT count(title), rental_duration, rental_rate, rating
+FROM film
+GROUP BY rating, rental_rate, rental_duration;
+
+-- 2. DISTINCT operator
+
+-- a. Select all distinct (different) last names from the actor table.
+SELECT DISTINCT last_name
+FROM actor;
+
+-- b. Select all distinct (different) postal codes from the address table.
+SELECT DISTINCT postal_code
+FROM address;
+
+-- c. Select all distinct (different) ratings from the film table.
+SELECT DISTINCT rating
+FROM film;
+
+-- 3. WHERE clause
+
+-- a. Select the title, description, rating, movie length columns from the films table that last 3 hours or longer.
+SELECT title, description, rating, length
+FROM film
+WHERE length > 90;
+
