@@ -533,3 +533,26 @@ SELECT title, description, rating, length
 FROM film
 WHERE length > 90;
 
+-- b. Select the payment id, amount, and payment date columns from the payments table for payments made on or after 05/27/2005.
+SELECT payment_id, amount, payment_date
+FROM payment
+WHERE payment_date > '2005-05-27';
+
+-- c. Select the primary key, amount, and payment date columns from the payment table for payments made on 05/27/2005.
+SELECT payment_id, amount, payment_date
+FROM payment
+WHERE payment_date LIKE '2005-05-27%';
+
+-- d. Select all columns from the customer table for rows that have a last names beginning with S and a first names ending with N.
+SELECT *
+FROM customer 
+WHERE last_name LIKE 's%'
+AND first_name LIKE '%n';
+
+-- e. Select all columns from the customer table for rows where the customer is inactive or has a last name beginning with "M".
+SELECT *
+FROM customer
+WHERE last_name LIKE 'm%'
+OR active = 0;
+
+
