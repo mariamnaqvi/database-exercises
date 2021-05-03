@@ -555,4 +555,46 @@ FROM customer
 WHERE last_name LIKE 'm%'
 OR active = 0;
 
+-- Find total bill for each order
+SELECT order_id , 
+sum(
+cast(
+(REPLACE(item_price, "$", ""))
+AS DECIMAL(4,2))) AS total_bill
+FROM orders
+GROUP BY order_id;
+
+-- f. Select all columns from the category table for rows where the primary key is greater than 4 and the name field begins with either C, S or T.
+SELECT *
+FROM category
+WHERE category_id > 4 
+AND (NAME LIKE 'C%' OR
+NAME LIKE 'S%' OR 
+NAME LIKE 'T%');
+
+-- g. Select all columns minus the password column from the staff table for rows that contain a password.
+
+-- h. Select all columns minus the password column from the staff table for rows that do not contain a password.
+SELECT *
+FROM staff
+WHERE PASSWORD IS NOT NULL;
+
+-- 4. IN operator
+
+-- a. Select the phone and district columns from the address table for addresses in California, England, Taipei, or West Java
+SELECT phone, district
+FROM address
+WHERE district IN ('California', 'England', 'Taipei', 'West Java');
+
+/* b. Select the payment id, amount, and payment date columns from the payment table for payments made on 05/25/2005, 05/27/2005, and 05/29/2005. 
+(Use the IN operator and the DATE function, instead of the AND operator as in previous exercises.) */
+SELECT payment_id, amount, payment_date
+FROM payment
+WHERE DATE(payment_date) IN (
+SELECT DATE(payment_date)
+FROM payment
+WHERE payment_date LIKE '2005-05-25%' OR 
+payment_date LIKE '2005-05-27%' OR 
+payment_date LIKE '2005-05-29%');
+
 
