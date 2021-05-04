@@ -597,4 +597,17 @@ WHERE payment_date LIKE '2005-05-25%' OR
 payment_date LIKE '2005-05-27%' OR 
 payment_date LIKE '2005-05-29%');
 
+-- c. Select all columns from the film table for films rated G, PG-13 or NC-17.
+SELECT *
+FROM film 
+WHERE rating IN ('G', 'PG-13', 'NC-17');
 
+-- d. how many films of each rating above
+SELECT rating, count(*) AS number_of_films
+FROM film 
+WHERE rating IN ('G', 'PG-13', 'NC-17')
+GROUP BY rating;
+
+-- 5. BETWEEN operator
+
+-- a. Select all columns from the payment table for payments made between midnight 05/25/2005 and 1 second before midnight 05/26/2005.
