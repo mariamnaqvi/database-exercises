@@ -611,3 +611,6 @@ GROUP BY rating;
 -- 5. BETWEEN operator
 
 -- a. Select all columns from the payment table for payments made between midnight 05/25/2005 and 1 second before midnight 05/26/2005.
+SELECT * FROM payment
+WHERE 
+    payment_date BETWEEN '2005-05-25 24:00:00' AND '2005-05-26 23:59:00';
