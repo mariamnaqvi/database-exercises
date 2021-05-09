@@ -636,6 +636,24 @@ group by location;
 
 -- b. Select the following columns from the film table for films where the length of the description is between 100 and 120.
 -- name of film, release year,rating, description and total rental cost
-SELECT title, release_year, rating, description, (rental_duration * rental_rate) AS total_rental_cost
+SELECT title, release_year, rating, description, length(description), (rental_duration * rental_rate) AS total_rental_cost
 FROM film 
-WHERE length BETWEEN 100 AND 120;
+WHERE length(description) BETWEEN 100 AND 120;
+
+-- 6. LIKE operator
+
+-- a. Select the film name, rating and description columns from the film table for rows where the description begins with "A Thoughtful"
+SELECT title, rating, description
+FROM film 
+WHERE description LIKE 'A Thoughtful%';
+
+-- b. Select the film name, rating and description columns from the film table for rows where the description ends with the word "Boat".
+SELECT title, rating, description
+FROM film 
+WHERE description LIKE '%Boat';
+
+-- c. Select the film name, rating and description columns from the film table where the description contains the word "Database" and the length of the film is greater than 3 hours.
+SELECT title, rating, description
+FROM film 
+WHERE description LIKE '%Database%'
+AND length > 180;
