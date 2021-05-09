@@ -614,3 +614,28 @@ GROUP BY rating;
 SELECT * FROM payment
 WHERE 
     payment_date BETWEEN '2005-05-25 24:00:00' AND '2005-05-26 23:59:00';
+
+/* Find the top 5 states with the most 5 star businesses.
+ Output the state name along with the number of 5-star businesses and order records by the number of 5-star businesses 
+ in descending order.
+ In case there are two states with the same result, sort them in alphabetical order. */
+select state, count(business_id)
+from yelp_business
+where stars = 5
+group by state
+order by count(business_id) desc, state
+limit 5;
+
+/* Facebook has developed a new programing language called Hack.To measure the popularity of Hack they ran a survey with their employees. The survey included data on previous programing familiarity as well as the number of years of experience, age, gender and most importantly satisfaction with Hack. Due to an error location data was not collected, but your supervisor demands a report showing average popularity of Hack by office location. Luckily the user IDs of employees completing the surveys were stored.
+Based on the above, find the average popularity of the Hack per office location.
+Output the location along with the average popularity. */
+select avg(popularity) as average_popularity, location
+from facebook_employees fe
+join facebook_hack_survey fhs on fhs.employee_id = fe.id
+group by location;
+
+-- b. Select the following columns from the film table for films where the length of the description is between 100 and 120.
+-- name of film, release year,rating, description and total rental cost
+SELECT title, release_year, rating, description, (rental_duration * rental_rate) AS total_rental_cost
+FROM film 
+WHERE length BETWEEN 100 AND 120;
