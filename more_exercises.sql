@@ -677,3 +677,36 @@ SELECT *
 FROM customer 
 LIMIT 100, 100;
 
+/* Find employees in the Sales department who achieved a target greater than 150.
+Output first names of employees.
+Sort records by the first name in descending order. */
+select first_name from employee
+where target > 150
+order by first_name desc;
+
+-- 8. ORDER BY statement
+
+-- a. Select all columns from the film table and order rows by the length field in ascending order.
+SELECT *
+FROM film 
+ORDER BY length;
+
+-- b. Select all distinct ratings from the film table ordered by rating in descending order.
+SELECT DISTINCT rating
+FROM film 
+ORDER BY rating DESC;
+
+/* Compare each employee's salary with the average salary of the corresponding department.
+Output the department, first name, and salary of employees along with the average salary of that department. */
+select e.department, first_name, salary, avg_sal.dept_avg
+from employee e,
+(select avg(salary) as dept_avg, department
+from employee
+group by department) avg_sal
+where e.department = avg_sal.department;
+
+-- c. Select the payment date and amount columns from the payment table for the first 20 payments ordered by payment amount in descending order.
+SELECT payment_date, amount
+FROM payment
+ORDER BY amount DESC
+LIMIT 20;
