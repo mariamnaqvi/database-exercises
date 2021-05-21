@@ -729,3 +729,18 @@ WHERE length < 120
 AND `rental_duration` BETWEEN 5 AND 7
 ORDER BY length
 LIMIT 10;
+
+-- 9.JOINS
+
+/* a. Select customer first_name/last_name and actor first_name/last_name columns from performing a left join between the customer and actor column on the last_name column in each table. (i.e. customer.last_name = actor.last_name)
+- Label customer first_name/last_name columns as customer_first_name/customer_last_name
+- Label actor first_name/last_name columns in a similar fashion. */
+SELECT 	 
+		c.first_name customer_first_name,
+		c.last_name customer_last_name,
+		a.first_name actor_first_name, 
+		a.last_name actor_last_name
+FROM customer c
+LEFT JOIN actor a USING (LAST_name);
+
+
