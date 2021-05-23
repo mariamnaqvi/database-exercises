@@ -743,4 +743,20 @@ SELECT
 FROM customer c
 LEFT JOIN actor a USING (LAST_name);
 
+-- Finding names of all tables in employees db
+SELECT TABLE_NAME 
+FROM information_schema.tables 
+WHERE table_schema='employees';
+
+/* b. Select the customer first_name/last_name and actor first_name/last_name columns from performing a /right join between the customer and actor column on the last_name column in each table. (i.e. customer.last_name = actor.last_name)
+returns correct number of records: 200 */
+SELECT c.first_name, c.last_name, a.first_name, a.last_name
+FROM customer c
+Right JOIN actor a USING(last_name);
+
+/* c. Select the customer first_name/last_name and actor first_name/last_name columns from performing an inner join between the customer and actor column on the last_name column in each table. (i.e. customer.last_name = actor.last_name) */
+SELECT c.first_name, c.last_name, a.first_name, a.last_name
+FROM customer c
+JOIN actor a USING(last_name);
+
 
