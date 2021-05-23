@@ -759,4 +759,21 @@ SELECT c.first_name, c.last_name, a.first_name, a.last_name
 FROM customer c
 JOIN actor a USING(last_name);
 
+/* d. Select the city name and country name columns from the city table, performing a left join with the country table to get the country name column. */
+SELECT city, country
+FROM city
+LEFT JOIN country USING (country_id);
+
+/* e. Select the title, description, release year, and language name columns from the film table, performing a left join with the language table to get the "language" column. */
+SELECT title, description, release_year, l.NAME AS language
+FROM film 
+LEFT JOIN LANGUAGE l USING (language_id);
+
+/* f. Select the first_name, last_name, address, address2, city name, district, and postal code columns from the staff table, performing 2 left joins with the address table then the city table to get the address and city related columns. */
+SELECT first_name, last_name, address, address2, city, district, postal_code
+FROM staff s
+LEFT JOIN address a USING (address_id)
+LEFT JOIN city c USING (city_id);
+
+
 
