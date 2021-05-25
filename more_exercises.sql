@@ -765,15 +765,35 @@ FROM city
 LEFT JOIN country USING (country_id);
 
 /* e. Select the title, description, release year, and language name columns from the film table, performing a left join with the language table to get the "language" column. */
-SELECT title, description, release_year, l.NAME AS language
+SELECT title, description, release_year, l.NAME AS LANGUAGE
 FROM film 
-LEFT JOIN LANGUAGE l USING (language_id);
+LEFT JOIN sakila.`language` l USING (language_id);
 
 /* f. Select the first_name, last_name, address, address2, city name, district, and postal code columns from the staff table, performing 2 left joins with the address table then the city table to get the address and city related columns. */
 SELECT first_name, last_name, address, address2, city, district, postal_code
 FROM staff s
 LEFT JOIN address a USING (address_id)
 LEFT JOIN city c USING (city_id);
+
+-- Bonus Extras
+
+-- 1. What is the average replacement cost of a film? returns 19.98
+SELECT AVG(replacement_cost)
+FROM film;
+
+-- Does this change depending on the rating of the film? Yes
+SELECT rating, AVG(replacement_cost) 
+FROM film
+GROUP BY rating;
+
+
+
+-- 2. How many different films of each genre are in the database?
+SELECT c.name, count(f.film_id) AS count
+FROM film f
+JOIN film_category fc ON (f.film_id = fc.film_id)
+JOIN category c ON (fc.category_id = c.category_id)
+GROUP BY c.name;
 
 
 
